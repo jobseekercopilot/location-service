@@ -1,5 +1,11 @@
 # Location Service
 
+## Develop branch status
+
+**Repository skeleton; not part of the runtime catalogue or Docker Compose.** The implemented location path is Client BFF → Location Gateway → Postcode.io Gateway. The text below describes intended commute-domain architecture; a callable API, persistence model, and Google Maps call path are not present on `develop`.
+
+See the central [location journey](https://docs.jobseekercopilot.com/journeys/location/) and [implementation status](https://docs.jobseekercopilot.com/reference/implementation-status/).
+
 Provider-neutral location normalisation and commute orchestration for Job Seeker
 Copilot.
 
@@ -82,4 +88,3 @@ Copyright © 2026 Bernard McGeever. All rights reserved.
 This repository contains proprietary software belonging to Bernard McGeever.
 It may not be used, copied, modified or distributed without express written
 permission. See [LICENSE](./LICENSE).
-
