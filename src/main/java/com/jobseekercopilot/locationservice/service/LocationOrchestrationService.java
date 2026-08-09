@@ -65,6 +65,17 @@ public class LocationOrchestrationService {
     }
 
     public LocationContracts.AutocompleteResponse postcodeAutocomplete(String input, String sessionId) {
+        if (isFullPostcode(input)) {
+            String postcode = canonicalPostcode(input);
+            CanonicalLocation location = canonicalLocations.fromPostcode(postcodeClient.lookup(postcode), postcode);
+            LocationContracts.Suggestion suggestion = new LocationContracts.Suggestion(
+                    sessions.put(sessionId, LocationEnums.Provider.POSTCODES_IO,
+                            postcode, location.postcode(), location.displayName()),
+                    location.displayName(), secondary(location.postcode(), location.region()),
+                    LocationEnums.Precision.POSTCODE_CENTROID);
+            return new LocationContracts.AutocompleteResponse(
+                    sessionId, List.of(suggestion), LocationContracts.Attribution.none(), "POSTCODES_IO");
+        }
         List<LocationContracts.Suggestion> suggestions = postcodeClient.search(input, maximumResults).stream()
                 .map(value -> new LocationContracts.Suggestion(
                         sessions.put(sessionId, LocationEnums.Provider.POSTCODES_IO,
@@ -176,6 +187,11 @@ public class LocationOrchestrationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid UK postcode or outcode");
         }
         return clean;
+    }
+
+    private boolean isFullPostcode(String value) {
+        String clean = value == null ? "" : value.trim().replaceAll("\\s+", " ").toUpperCase(Locale.UK);
+        return clean.matches("(?:GIR 0AA|[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2})");
     }
 
     private String secondary(String postcode, String region) {
