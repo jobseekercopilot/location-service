@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "repository": "jobseekercopilot/google-maps-gateway",
+  "contractPath": "api/openapi.yaml",
+  "contractVersion": "1.0.0",
+  "sourceRevision": "bd45bda740400c732083c78b2b88e4e523c5b5a1",
+  "sha256": "088c07471237d84aa0162c97f16f510ca3029e8fdd942e97156fe111b7ffc556",
+  "generatedClient": {
+    "generator": "openapi-generator",
+    "generatorVersion": "7.24.0",
+    "package": "com.jobseekercopilot.googlemapsgateway.client.generated"
+  }
+}
