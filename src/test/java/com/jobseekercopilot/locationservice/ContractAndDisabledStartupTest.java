@@ -45,7 +45,7 @@ class ContractAndDisabledStartupTest {
                 .isEqualTo("088c07471237d84aa0162c97f16f510ca3029e8fdd942e97156fe111b7ffc556");
         assertThat(pin)
                 .contains("\"contractVersion\": \"1.0.0\"")
-                .contains("\"sourceRevision\": \"1f57ea464dec6b72386b43f01bbb31ade3e577bd\"")
+                .contains("\"sourceRevision\": \"bd45bda740400c732083c78b2b88e4e523c5b5a1\"")
                 .contains("\"sha256\": \"" + checksum + "\"")
                 .contains("\"generatorVersion\": \"7.24.0\"");
     }
