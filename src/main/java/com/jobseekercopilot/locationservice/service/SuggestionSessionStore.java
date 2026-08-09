@@ -8,21 +8,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
 public class SuggestionSessionStore {
     private final Duration ttl;
     private final int maximumEntries;
     private final Clock clock;
     private final Map<String, Entry> entries = new ConcurrentHashMap<>();
 
-    @Autowired
-    public SuggestionSessionStore(
-            @Value("${location.session.ttl:10m}") Duration ttl,
-            @Value("${location.session.maximum-entries:10000}") int maximumEntries) {
+    public SuggestionSessionStore(Duration ttl, int maximumEntries) {
         this(ttl, maximumEntries, Clock.systemUTC());
     }
 
