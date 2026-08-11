@@ -42,4 +42,30 @@ class LocationOrchestrationServiceTest {
         verify(postcodes).lookup("RG1 1AA");
         verify(postcodes, never()).search("rg1 1aa", 5);
     }
+
+    @Test
+    void outcodeAutocompleteUsesThePostcodeLookupInsteadOfPlaceSearch() {
+        PostcodeGatewayClient postcodes = mock(PostcodeGatewayClient.class);
+        when(postcodes.lookup("UB3")).thenReturn(new PostcodeGatewayClient.PostcodeResult(
+                "UB3", "England", "London", "Hillingdon",
+                new BigDecimal("51.5034"), new BigDecimal("-0.4208")));
+        LocationOrchestrationService service = new LocationOrchestrationService(
+                postcodes,
+                mock(GoogleMapsGatewayClient.class),
+                new SuggestionSessionStore(Duration.ofMinutes(5), 10),
+                new CanonicalLocationFactory(),
+                false,
+                5);
+
+        LocationContracts.AutocompleteResponse result = service.autocomplete(
+                new LocationContracts.AutocompleteRequest("ub3", UUID.randomUUID().toString(), List.of("GB")));
+
+        assertThat(result.suggestions()).singleElement().satisfies(suggestion -> {
+            assertThat(suggestion.primaryText()).isEqualTo("Hillingdon, London");
+            assertThat(suggestion.secondaryText()).contains("UB3");
+            assertThat(suggestion.precisionHint()).isEqualTo(LocationEnums.Precision.POSTCODE_CENTROID);
+        });
+        verify(postcodes).lookup("UB3");
+        verify(postcodes, never()).search("ub3", 5);
+    }
 }

@@ -65,7 +65,7 @@ public class LocationOrchestrationService {
     }
 
     public LocationContracts.AutocompleteResponse postcodeAutocomplete(String input, String sessionId) {
-        if (isFullPostcode(input)) {
+        if (isPostcodeOrOutcode(input)) {
             String postcode = canonicalPostcode(input);
             CanonicalLocation location = canonicalLocations.fromPostcode(postcodeClient.lookup(postcode), postcode);
             LocationContracts.Suggestion suggestion = new LocationContracts.Suggestion(
@@ -192,6 +192,11 @@ public class LocationOrchestrationService {
     private boolean isFullPostcode(String value) {
         String clean = value == null ? "" : value.trim().replaceAll("\\s+", " ").toUpperCase(Locale.UK);
         return clean.matches("(?:GIR 0AA|[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2})");
+    }
+
+    private boolean isPostcodeOrOutcode(String value) {
+        String clean = value == null ? "" : value.trim().replaceAll("\\s+", " ").toUpperCase(Locale.UK);
+        return isFullPostcode(clean) || clean.matches("[A-Z]{1,2}[0-9][A-Z0-9]?");
     }
 
     private String secondary(String postcode, String region) {
