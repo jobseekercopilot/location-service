@@ -2,7 +2,10 @@
 
 ## Develop branch status
 
-**Repository skeleton; not part of the runtime catalogue or Docker Compose.** The implemented location path is Client BFF → Location Gateway → Postcode.io Gateway. The text below describes intended commute-domain architecture; a callable API, persistence model, and Google Maps call path are not present on `develop`.
+**Implemented and composed for controlled private-beta use.** The callable
+internal API, provider-neutral session/canonicalisation rules, Postcodes.io
+fallback and Google Places/Routes path are on `develop` and in the
+Infrastructure runtime catalogue. Google remains disabled by default.
 
 See the central [location journey](https://docs.jobseekercopilot.com/journeys/location/) and [implementation status](https://docs.jobseekercopilot.com/reference/implementation-status/).
 
