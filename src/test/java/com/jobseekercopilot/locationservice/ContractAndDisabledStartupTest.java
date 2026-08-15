@@ -31,7 +31,8 @@ class ContractAndDisabledStartupTest {
         assertThat(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(contract)))
                 .isEqualTo(expected);
         assertThat(new String(contract, java.nio.charset.StandardCharsets.UTF_8))
-                .contains("version: 1.0.0");
+                .contains("version: 1.1.0")
+                .contains("'422':");
     }
 
     @Test

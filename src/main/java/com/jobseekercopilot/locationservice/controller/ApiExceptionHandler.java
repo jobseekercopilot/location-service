@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
@@ -26,6 +28,18 @@ public class ApiExceptionHandler {
     ResponseEntity<Map<String, Object>> capacity(IllegalStateException exception) {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(body(503, "Location service capacity unavailable"));
+    }
+
+    @ExceptionHandler(ResourceAccessException.class)
+    ResponseEntity<Map<String, Object>> providerUnavailable() {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(body(503, "Location service is temporarily unavailable."));
+    }
+
+    @ExceptionHandler(RestClientException.class)
+    ResponseEntity<Map<String, Object>> invalidProviderResponse() {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                .body(body(502, "Location provider returned an invalid response."));
     }
 
     private Map<String, Object> body(int status, String message) {
