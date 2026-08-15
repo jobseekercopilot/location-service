@@ -51,7 +51,7 @@ unavailable result to its advisory consumer.
 
 ## API and contract
 
-The producer-owned internal OpenAPI 1.0.0 source is
+The producer-owned internal OpenAPI 1.1.0 source is
 [`api/openapi.yaml`](api/openapi.yaml). Consumers check in the exact reviewed
 snapshot and generate clients into disposable Maven build output.
 
@@ -66,6 +66,11 @@ Every application endpoint requires `X-Service-Token`; health endpoints do not.
 Google suggestion text and coordinates are transient. Persistable coordinates
 and labels are sourced from Postcodes.io/legacy centroids, and commute results
 are never persisted here.
+
+When Northern Ireland postcode coverage is not commercially approved, the
+postcode gateway's redacted `422` response is preserved by autocomplete,
+resolve and postcode lookups. Provider response bodies and the submitted
+postcode are never copied into public error messages.
 
 ## Build
 
