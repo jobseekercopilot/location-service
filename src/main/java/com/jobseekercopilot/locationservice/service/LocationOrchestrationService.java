@@ -74,7 +74,7 @@ public class LocationOrchestrationService {
                     location.displayName(), secondary(location.postcode(), location.region()),
                     LocationEnums.Precision.POSTCODE_CENTROID);
             return new LocationContracts.AutocompleteResponse(
-                    sessionId, List.of(suggestion), LocationContracts.Attribution.none(), "POSTCODES_IO");
+                    sessionId, List.of(suggestion), LocationContracts.Attribution.postcodesIo(), "POSTCODES_IO");
         }
         List<LocationContracts.Suggestion> suggestions = postcodeClient.search(input, maximumResults).stream()
                 .map(value -> new LocationContracts.Suggestion(
@@ -84,7 +84,7 @@ public class LocationOrchestrationService {
                         LocationEnums.Precision.LOCALITY_CENTROID))
                 .toList();
         return new LocationContracts.AutocompleteResponse(
-                sessionId, suggestions, LocationContracts.Attribution.none(), "POSTCODES_IO");
+                sessionId, suggestions, LocationContracts.Attribution.postcodesIo(), "POSTCODES_IO");
     }
 
     public LocationContracts.ResolveResponse resolve(LocationContracts.ResolveRequest request) {
@@ -94,7 +94,7 @@ public class LocationOrchestrationService {
             CanonicalLocation location = lookupPostcode(selection.postcode());
             return new LocationContracts.ResolveResponse(
                     location, LocationContracts.ResolutionStatus.RESOLVED,
-                    LocationContracts.Attribution.none(), null);
+                    LocationContracts.Attribution.postcodesIo(), null);
         }
         GoogleMapsGatewayClient.GooglePlaceDetails details =
                 googleClient.resolve(selection.providerReference(), request.sessionId());
