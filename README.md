@@ -51,7 +51,7 @@ unavailable result to its advisory consumer.
 
 ## API and contract
 
-The producer-owned internal OpenAPI 1.1.0 source is
+The producer-owned internal OpenAPI 1.2.0 source is
 [`api/openapi.yaml`](api/openapi.yaml). Consumers check in the exact reviewed
 snapshot and generate clients into disposable Maven build output.
 
@@ -71,6 +71,10 @@ When Northern Ireland postcode coverage is not commercially approved, the
 postcode gateway's redacted `422` response is preserved by autocomplete,
 resolve and postcode lookups. Provider response bodies and the submitted
 postcode are never copied into public error messages.
+
+Postcodes.io-backed autocomplete and resolution responses carry
+`attribution.required=true` with provider `POSTCODES_IO`, allowing the public
+gateway and candidate UI to retain the required source acknowledgement.
 
 ## Build
 

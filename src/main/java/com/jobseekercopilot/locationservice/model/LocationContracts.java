@@ -33,6 +33,10 @@ public final class LocationContracts {
             return new Attribution(true, "GOOGLE_MAPS");
         }
 
+        public static Attribution postcodesIo() {
+            return new Attribution(true, "POSTCODES_IO");
+        }
+
         public static Attribution none() {
             return new Attribution(false, null);
         }

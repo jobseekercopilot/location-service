@@ -31,7 +31,8 @@ class ContractAndDisabledStartupTest {
         assertThat(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(contract)))
                 .isEqualTo(expected);
         assertThat(new String(contract, java.nio.charset.StandardCharsets.UTF_8))
-                .contains("version: 1.1.0")
+                .contains("version: 1.2.0")
+                .contains("enum: [GOOGLE_MAPS, POSTCODES_IO]")
                 .contains("'422':");
     }
 
